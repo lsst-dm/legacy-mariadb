@@ -2,7 +2,9 @@ FROM qserv/stack:centos_latest
 MAINTAINER Fabrice Jammes <fabrice.jammes@in2p3.fr>
 
 USER root
-RUN yum install -y git
+
+# eups/eupspkg dependencies
+RUN yum install -y git patch
 
 # MariaDB dependencies
 RUN yum install -y cmake zlib-devel xz-devel ncurses-devel
