@@ -6,6 +6,10 @@ config()
     ARGS=()
 
     ARGS+=("-DCMAKE_INSTALL_PREFIX=${PREFIX}")
+
+    # Remove mysql-test directory (~330 MB) to reduce installation size
+    ARGS+=("-DINSTALL_MYSQLTESTDIR=")
+
     # TokuDB requires third-party software jemalloci (see http://www.canonware.com/jemalloc/)
     ARGS+=('-DPLUGIN_TOKUDB=NO')
 
