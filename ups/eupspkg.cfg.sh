@@ -13,6 +13,9 @@ config()
     # TokuDB requires third-party software jemalloci (see http://www.canonware.com/jemalloc/)
     ARGS+=('-DPLUGIN_TOKUDB=NO')
 
+    # Always use bundled PCRE
+    ARGS+=('-DWITH_PCRE=bundled')
+
     # Prevent CMake from finding and linking against libraries distributed in $(dirname
     # python)/../lib. This is CMake's default behaviour, but can cause us to erroneously link
     # against libraries distributed by e.g. Anaconda.
