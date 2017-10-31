@@ -24,13 +24,6 @@ config()
 
     case $(uname) in
         Linux*)
-            if grep -q -i "CentOS release 5" /etc/redhat-release; then
-                # mroonga does not build on EL5 (conda ref platform) and is
-                # unused by LSST
-                ARGS+=('-DPLUGIN_MROONGA=NO')
-                # required to build on EL5
-                ARGS+=('-DHAVE_CXX_NEW=NO')
-            fi
             ;;
         Darwin*)
             # Disable external SSL on OS X as it is not a standard library
