@@ -22,7 +22,7 @@ config()
     # Prevent CMake from finding and linking against libraries distributed in $(dirname
     # python)/../lib. This is CMake's default behavior, but can cause us to erroneously link
     # against libraries distributed by e.g. Anaconda.
-    PYTHONLIBDIR=$(which python | sed -e's|bin/python|lib|')
+    PYTHONLIBDIR=$(command -v python | sed -e's|bin/python|lib|')
     ARGS+=("-DCMAKE_SYSTEM_IGNORE_PATH=${PYTHONLIBDIR}")
 
     cmake . "${ARGS[@]}"
