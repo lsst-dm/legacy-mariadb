@@ -7,7 +7,7 @@ spinner()
 	local pid=$1
 	local delay=0.75
 	local spinstr='.'
-	while ps -p "$pid" | grep -q "$pid"; do
+	while ps -p "$pid" > /dev/null 2>&1; do
 		echo -n "$spinstr"
 		sleep $delay
 	done
@@ -16,6 +16,7 @@ spinner()
 
 SRC_DIR=/home/qserv/src
 
+# shellcheck disable=SC1091
 . /qserv/stack/loadLSST.bash
 
 cp -r /tmp/mariadb $SRC_DIR
