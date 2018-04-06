@@ -26,3 +26,16 @@ before_install:
 script:
     - docker run --rm -v $(pwd):/tmp/mariadb qserv/mariadb_build:centos
     - docker run --rm -v $(pwd):/tmp/mariadb qserv/mariadb_build:debian
+
+matrix:
+  include:
+    - env: TEST=shellcheck
+      services:
+        - docker
+      script: |
+        set -e
+        shopt -s globstar nullglob
+        CHECK=( **/*.sh )
+        [[ ${#CHECK[@]} -eq 0 ]] && exit
+        docker run -v $(pwd):$(pwd) -w $(pwd) \
+          koalaman/shellcheck-alpine:v0.4.6 -x "${CHECK[@]}"
