@@ -7,7 +7,7 @@ spinner()
 	local pid=$1
 	local delay=0.75
 	local spinstr='.'
-	while ps -p "$pid" | grep -q "$pid"; do
+	while ps -p "$pid" > /dev/null 2>&1; do
 		echo -n "$spinstr"
 		sleep $delay
 	done
@@ -16,6 +16,7 @@ spinner()
 
 SRC_DIR=/home/qserv/src
 
+# shellcheck disable=SC1091
 . /qserv/stack/loadLSST.bash
 
 setup git 1.8.5.2
@@ -26,15 +27,15 @@ setup -r .
 eupspkg -e prep
 for cmd in config build install
 do
-    echo "eupspkg step: $cmd"
+	echo "eupspkg step: $cmd"
 	(eupspkg -e "$cmd" > /tmp/"$cmd".log 2>&1) &
 	my_pid=$!
 	spinner "$my_pid"
 	wait "$my_pid"
 	ret_code=$?
-    if [ $ret_code -ne 0 ]; then
+	if [ $ret_code -ne 0 ]; then
 		cat /tmp/"$cmd".log
 		exit 1
-    fi
+	fi
 done
 eupspkg -e decl -t current
