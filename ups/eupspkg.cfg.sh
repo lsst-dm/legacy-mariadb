@@ -7,6 +7,9 @@ config()
 
     ARGS+=("-DCMAKE_INSTALL_PREFIX=${PREFIX}")
 
+    # Don't pick up e.g. conda boost by accident
+    ARGS+=("-DBoost_NO_BOOST_CMAKE=ON")
+
     # Remove mysql-test directory (~330 MB) to reduce installation size
     ARGS+=("-DINSTALL_MYSQLTESTDIR=")
 
